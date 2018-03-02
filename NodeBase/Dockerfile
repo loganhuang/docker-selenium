@@ -16,6 +16,18 @@ RUN apt-get update -qqy \
     xvfb \
   && rm -rf /var/lib/apt/lists/* /var/cache/apt/*
 
+#=================
+# Locale settings
+#=================
+ENV LANGUAGE zh_CN.UTF-8
+ENV LANG zh_CN.UTF-8
+ENV LC_ALL=zh_CN.UTF-8
+RUN apt-get update -qqy \
+  && /usr/share/locales/install-language-pack zh_CN \
+  && locale-gen zh_CN.UTF-8 \
+  && dpkg-reconfigure --frontend noninteractive locales \
+  && apt-get -qqy --no-install-recommends install language-pack-zh-hans
+
 #===================================================
 # Run the following commands as non-privileged user
 #===================================================
